@@ -2,6 +2,9 @@
 {
     internal class PSC
     {
+        /**
+         * Main method to run the password strength checker.
+         */
         static void Main(string[] args)
         {
             Console.Write("Enter a password: ");
@@ -14,7 +17,7 @@
         }
 
         /**
-         * Password strength levels.
+         * Password strength levels.  
          */
         public enum PasswordStrength
         {
@@ -39,39 +42,27 @@
             {
                 int score = 0;
 
-                // Length check
-                if (password.Length < 6)
-                    return PasswordStrength.VeryWeak;
-                else if (password.Length < 8)
+                // Length check and score
+                if (password.Length >= 12)
+                    score += 4;
+                else if (password.Length >= 8)
+                    score += 2;
+                else if (password.Length >= 6)
                     score += 1;
                 else
-                    score += 2;
+                    return PasswordStrength.VeryWeak;
 
-                // Check for uppercase letters
-                if (password.Any(char.IsUpper))
-                    score += 2;
-
-                // Check for lowercase letters
-                if (password.Any(char.IsLower))
-                    score += 2;
-
-                // Check for digits
-                if (password.Any(char.IsDigit))
-                    score += 2;
-
-                // Check for special characters
-                if (password.Any(ch => !char.IsLetterOrDigit(ch)))
-                    score += 2;
+                // Character complexity check
+                if (password.Any(char.IsUpper)) score += 2;
+                if (password.Any(char.IsLower)) score += 2;
+                if (password.Any(char.IsDigit)) score += 2;
+                if (password.Any(ch => !char.IsLetterOrDigit(ch))) score += 2;
 
                 // Determine strength based on score
-                if (score < 4)
-                    return PasswordStrength.Weak;
-                else if (score < 8)
-                    return PasswordStrength.Medium;
-                else if (score < 12)
-                    return PasswordStrength.Strong;
-                else
-                    return PasswordStrength.VeryStrong;
+                if (score < 4) return PasswordStrength.Weak;
+                if (score < 8) return PasswordStrength.Medium;
+                if (score < 12) return PasswordStrength.Strong;
+                return PasswordStrength.VeryStrong;
             }
         }
     }
