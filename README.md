@@ -12,7 +12,10 @@ Clone the repository:
 - git clone https://github.com/AJoltik/password-strength-checker
 - cd PasswordStrengthChecker
 
-Compile and run the program using the .NET CLI:
+Build the project:
+- dotnet build
+
+Run the program:
 - dotnet run
 
 Enter a password when prompted, and the program will output its strength.
